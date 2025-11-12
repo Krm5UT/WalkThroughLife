@@ -1,0 +1,186 @@
+
+newmtl Wood_Phong_FFFFFF_7202b731-4e83-47e0-a113-b3e419d425c0_o_r0.90
+Kd  1 1 1
+Ks  0 0 0
+Ka  0 0 0
+d  1
+Ns  100
+illum 2
+map_Kd 7202b731-4e83-47e0-a113-b3e419d425c0.png
+
+
+
+
+newmtl Flat_000000_4faa7e38-64fd-4e6c-b95c-0bf8658bbf32_o_0.9006644-0.19027230.53036370.5303637357.4127
+Kd  0 0 0
+Ks  0 0 0
+Ka  0 0 0
+d  1
+Ns  0
+illum 0
+map_Kd 4faa7e38-64fd-4e6c-b95c-0bf8658bbf32.png
+
+
+
+
+newmtl Phong_FFFFFF_1d6ff66f-33d5-4679-9a25-5db24c4c6f40_o_r0.27
+Kd  1 1 1
+Ks  0 0 0
+Ka  0 0 0
+d  1
+Ns  726.0502
+illum 2
+map_Kd 1d6ff66f-33d5-4679-9a25-5db24c4c6f40.png
+
+
+
+
+newmtl EVA_Flat_B2B2B2_4faa7e38-64fd-4e6c-b95c-0bf8658bbf32_o_0.9006644-0.19027230.53036370.5303637357.4127
+Kd  0.6980392 0.6980392 0.6980392
+Ks  0 0 0
+Ka  0 0 0
+d  1
+Ns  0
+illum 0
+map_Kd 4faa7e38-64fd-4e6c-b95c-0bf8658bbf32.png
+
+
+
+
+newmtl Dusty glass_Reflective_D0D0D0_a5fbc342-27ca-4b49-a8d2-f5ab218242ad_t_-4.6156184.2739265.9997225.99972255.20761_r0.00_m0.02_clearcoat
+Kd  0.8156863 0.8156863 0.8156863
+Ks  0.9955189 0.9955189 0.9955189
+Ka  0 0 0
+d  1
+Ns  998.55
+illum 5
+map_Kd a5fbc342-27ca-4b49-a8d2-f5ab218242ad.png
+
+
+
+
+newmtl Standard_FFFFFF
+Kd  1 1 1
+Ks  0 0 0
+Ka  0 0 0
+d  1
+Ns  0
+illum 1
+
+
+
+
+newmtl Phong_FFFFFF_r0.90
+Kd  1 1 1
+Ks  0 0 0
+Ka  0 0 0
+d  1
+Ns  100
+illum 2
+
+
+
+
+newmtl Plastic_Glossy_7F7F7F_6b5ebf7e-112c-443a-b5b2-2a5e2239dde6_o_1.770713.8411780.25674070.25674077.968165_r0.65_m0.95_hs-86.8
+Kd  0.4980392 0.4980392 0.4980392
+Ks  0.4980392 0.4980392 0.4980392
+Ka  0 0 0
+d  1
+Ns  352.4435
+illum 5
+map_Kd 6b5ebf7e-112c-443a-b5b2-2a5e2239dde6.png
+
+
+
+
+newmtl Reflective_FFFEE7_r0.48
+Kd  1 0.9960784 0.9058824
+Ks  1 1 1
+Ka  0 0 0
+d  1
+Ns  523.0429
+illum 5
+
+
+
+
+newmtl Closed mesh_Flat_FFFFFF_fea147e3-a9fe-45f3-ace4-a54607d64322_o_-1.710733-1.6685365.6668075.666807-3.872894_s
+Kd  1 1 1
+Ks  0 0 0
+Ka  0 0 0
+d  1
+Ns  0
+illum 0
+map_Kd fea147e3-a9fe-45f3-ace4-a54607d64322.png
+
+
+
+
+newmtl Alcantra_Standard_D0D0D0_edeb7e52-104e-4384-861e-60c33553a8c2_o_-2.9974714.5217182.1411332.141133359.0358
+Kd  0.8156863 0.8156863 0.8156863
+Ks  0 0 0
+Ka  0 0 0
+d  1
+Ns  0
+illum 1
+map_Kd edeb7e52-104e-4384-861e-60c33553a8c2.png
+
+
+
+
+newmtl Standard_437ADE_edeb7e52-104e-4384-861e-60c33553a8c2_o_-2.9974714.5217182.1411332.141133359.0358
+Kd  0.2627451 0.4784314 0.8705882
+Ks  0 0 0
+Ka  0 0 0
+d  1
+Ns  0
+illum 1
+map_Kd edeb7e52-104e-4384-861e-60c33553a8c2.png
+
+
+
+
+newmtl Flat_EDEDED
+Kd  0.9294118 0.9294118 0.9294118
+Ks  0 0 0
+Ka  0 0 0
+d  1
+Ns  0
+illum 0
+
+
+
+
+newmtl Flat_EDEDED_4faa7e38-64fd-4e6c-b95c-0bf8658bbf32_o_0.9006644-0.19027230.53036370.5303637357.4127
+Kd  0.9294118 0.9294118 0.9294118
+Ks  0 0 0
+Ka  0 0 0
+d  1
+Ns  0
+illum 0
+map_Kd 4faa7e38-64fd-4e6c-b95c-0bf8658bbf32.png
+
+
+
+
+newmtl Flat_000000_0.9006644-0.19027230.53036370.5303637357.4127
+Kd  0 0 0
+Ks  0 0 0
+Ka  0 0 0
+d  1
+Ns  0
+illum 0
+
+
+
+
+newmtl Polarized glass_Glossy_00B6EA4C_m0.71_hs62.1_out10.00
+Kd  0 0.7137255 0.9176471
+Ks  0.2360033 0 0.9176471
+Ka  0 0 0
+d  0.2980392
+Ns  1000
+illum 5
+
+
+
