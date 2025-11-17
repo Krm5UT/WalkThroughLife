@@ -31,14 +31,6 @@ public class DoorHandleTeleport : MonoBehaviour
     public float openSpeed = 2f;
     public float doorTime = 2f;
     
-    [Header("Teleport Settings")]
-    [Tooltip("Delay after door opens before teleporting back")]
-    public float teleportDelay = 1f;
-    
-    [Header("Movement Freeze Settings")]
-    [Tooltip("Freeze player movement when door is grabbed")]
-    public bool freezeMovement = true;
-    
     private Grabbable grabbable;
     private bool isOpen = false;
     private bool isOpening = false;
@@ -48,16 +40,6 @@ public class DoorHandleTeleport : MonoBehaviour
     // Store the rig's initial position and rotation
     private Vector3 initialRigPosition;
     private Quaternion initialRigRotation;
-    
-    // Components to freeze
-    private CharacterController characterController;
-    private OVRPlayerController ovrPlayerController;
-    private Rigidbody rigidBody;
-    
-    // Store enabled states
-    private bool wasCharacterControllerEnabled;
-    private bool wasOVRPlayerControllerEnabled;
-    private bool wasRigidbodyKinematic;
     
     void Start()
     {
@@ -90,11 +72,6 @@ public class DoorHandleTeleport : MonoBehaviour
         initialRigPosition = playerRig.position;
         initialRigRotation = playerRig.rotation;
         
-        // Find movement components on the player rig
-        characterController = playerRig.GetComponent<CharacterController>();
-        ovrPlayerController = playerRig.GetComponent<OVRPlayerController>();
-        rigidBody = playerRig.GetComponent<Rigidbody>();
-        
         // Listen for grab events
         grabbable.WhenPointerEventRaised += OnPointerEvent;
     }
@@ -119,68 +96,10 @@ public class DoorHandleTeleport : MonoBehaviour
         }
     }
     
-    private void FreezePlayerMovement()
-    {
-        if (!freezeMovement) return;
-        
-        // Disable CharacterController
-        if (characterController != null)
-        {
-            wasCharacterControllerEnabled = characterController.enabled;
-            characterController.enabled = false;
-        }
-        
-        // Disable OVRPlayerController
-        if (ovrPlayerController != null)
-        {
-            wasOVRPlayerControllerEnabled = ovrPlayerController.enabled;
-            ovrPlayerController.enabled = false;
-        }
-        
-        // Make Rigidbody kinematic to prevent physics movement
-        if (rigidBody != null)
-        {
-            wasRigidbodyKinematic = rigidBody.isKinematic;
-            rigidBody.isKinematic = true;
-            rigidBody.velocity = Vector3.zero;
-            rigidBody.angularVelocity = Vector3.zero;
-        }
-        
-        Debug.Log("Player movement frozen");
-    }
-    
-    private void UnfreezePlayerMovement()
-    {
-        if (!freezeMovement) return;
-        
-        // Re-enable CharacterController
-        if (characterController != null)
-        {
-            characterController.enabled = wasCharacterControllerEnabled;
-        }
-        
-        // Re-enable OVRPlayerController
-        if (ovrPlayerController != null)
-        {
-            ovrPlayerController.enabled = wasOVRPlayerControllerEnabled;
-        }
-        
-        // Restore Rigidbody state
-        if (rigidBody != null)
-        {
-            rigidBody.isKinematic = wasRigidbodyKinematic;
-        }
-        
-        Debug.Log("Player movement unfrozen");
-    }
-    
     private IEnumerator OpenDoor()
     {
         isOpening = true;
         isOpen = true;
-        
-        // Freeze player movement immediately when door is grabbed
-        FreezePlayerMovement();
         
         float elapsedTime = 0f;
         
@@ -195,28 +114,11 @@ public class DoorHandleTeleport : MonoBehaviour
         doorToOpen.rotation = openRotation;
         
         // Teleport the player back to their original position
-        if (characterController != null)
-        {
-            // For CharacterController, disable it briefly for teleport
-            bool wasEnabled = characterController.enabled;
-            characterController.enabled = false;
-            playerRig.position = initialRigPosition;
-            playerRig.rotation = initialRigRotation;
-            yield return null;
-            characterController.enabled = wasEnabled;
-        }
-        else
-        {
-            playerRig.position = initialRigPosition;
-            playerRig.rotation = initialRigRotation;
-        }
+        playerRig.position = initialRigPosition;
+        playerRig.rotation = initialRigRotation;
         
         // Reset the door back to closed position
         doorToOpen.rotation = closedRotation;
-        
-        // Unfreeze player movement after teleport
-        UnfreezePlayerMovement();
-        
         isOpen = false;
         isOpening = false;
     }

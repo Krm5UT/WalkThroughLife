@@ -5,20 +5,6 @@ using Oculus.Interaction;
 
 public class DoorOpensPartially : MonoBehaviour
 {
-    // HOW THIS WORKS:
-    // Create a Grab Interactable cube.
-    // Place it where you would want your door handle and disable (uncheck) its mesh renderer.
-    // Add this script to it. 
-    //
-    // The script will automatically detect if the door handle is a child of a DoorPivot object.
-    // If it finds a DoorPivot parent, it will use that as the rotation point.
-    // Otherwise, it will rotate the door you assign directly.
-    //
-    // RECOMMENDED SETUP:
-    // Make an empty game object and call it DoorPivot
-    // Place it on the edge of the door, where you would want/expect it to pivot from.
-    // Make the door object and the handle object children of that DoorPivot by dragging them inside of it.
-    
     [Header("Door Reference")]
     [Tooltip("Drag the door GameObject here (can be the DoorPivot or the door itself)")]
     public Transform doorToOpen;
@@ -37,6 +23,10 @@ public class DoorOpensPartially : MonoBehaviour
     [Tooltip("Automatically find DoorPivot parent (recommended)")]
     public bool autoDetectPivot = true;
     
+    [Header("Audio Settings")]
+    [Tooltip("Drag your GiggleAudio GameObject here")]
+    public GameObject giggleAudio;
+    
     private Grabbable grabbable;
     private bool isOpen = false;
     private bool isOpening = false;
@@ -46,6 +36,8 @@ public class DoorOpensPartially : MonoBehaviour
     
     void Start()
     {
+        Debug.Log("=== DoorOpensPartially START ===");
+        
         // Get the Grabbable component on this handle
         grabbable = GetComponent<Grabbable>();
         
@@ -53,6 +45,10 @@ public class DoorOpensPartially : MonoBehaviour
         {
             Debug.LogError("No Grabbable component found on " + gameObject.name);
             return;
+        }
+        else
+        {
+            Debug.Log("Grabbable component found!");
         }
         
         // Auto-detect pivot point
@@ -75,10 +71,15 @@ public class DoorOpensPartially : MonoBehaviour
         closedRotation = doorPivot.rotation;
         openRotation = Quaternion.Euler(doorPivot.eulerAngles + new Vector3(0, openAngle, 0));
         
+        Debug.Log("Closed rotation: " + closedRotation.eulerAngles);
+        Debug.Log("Open rotation: " + openRotation.eulerAngles);
+        
         // Listen for grab events
         grabbable.WhenPointerEventRaised += OnPointerEvent;
+        Debug.Log("Subscribed to WhenPointerEventRaised event");
         
         Debug.Log("Door pivot set to: " + doorPivot.name);
+        Debug.Log("=== Setup Complete ===");
     }
     
     void OnDestroy()
@@ -126,19 +127,54 @@ public class DoorOpensPartially : MonoBehaviour
     
     private void OnPointerEvent(PointerEvent pointerEvent)
     {
+        Debug.Log("*** POINTER EVENT RECEIVED: " + pointerEvent.Type + " ***");
+        
         // When the handle is grabbed, open the door
         if (pointerEvent.Type == PointerEventType.Select)
         {
+            Debug.Log("SELECT EVENT DETECTED!");
+            
             if (!isOpen && !isOpening)
             {
+                Debug.Log("Starting door open coroutine...");
                 StartCoroutine(OpenDoor());
             }
+            else
+            {
+                Debug.Log("Door already open or opening. isOpen: " + isOpen + ", isOpening: " + isOpening);
+            }
+        }
+    }
+    
+    private void TriggerGiggleAudio()
+    {
+        if (giggleAudio != null)
+        {
+            // Try to get AudioSource component and play it
+            AudioSource audioSource = giggleAudio.GetComponent<AudioSource>();
+            if (audioSource != null)
+            {
+                audioSource.Play();
+                Debug.Log("Triggered GiggleAudio GameObject");
+            }
+            else
+            {
+                Debug.LogWarning("GiggleAudio GameObject has no AudioSource component!");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("No GiggleAudio GameObject assigned!");
         }
     }
     
     private IEnumerator OpenDoor()
     {
+        Debug.Log(">>> OpenDoor coroutine started <<<");
         isOpening = true;
+        
+        // Trigger the GiggleAudio GameObject when door starts opening
+        TriggerGiggleAudio();
         
         float elapsedTime = 0f;
         
