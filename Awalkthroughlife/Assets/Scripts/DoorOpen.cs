@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using Oculus.Interaction;
 
-public class DoorHandle : MonoBehaviour
+public class DoorOpen : MonoBehaviour
 {
     // HOW THIS WORKS:
     // Create a Grab Interactable cube.
@@ -16,48 +16,47 @@ public class DoorHandle : MonoBehaviour
     // You should see them nested under in the hierarchy!
     //
     // In the inspector, set Door To Open as your DoorPivot object.
-
-
+    
     [Header("Door Reference")]
     [Tooltip("Drag the door GameObject here")]
     public Transform doorToOpen;
-
+    
     [Header("Door Settings")]
     public float openAngle = 90f;
     public float openSpeed = 2f;
     public float doorTime = 2f;
-
+    
     private Grabbable grabbable;
     private bool isOpen = false;
     private bool isOpening = false;
     private Quaternion closedRotation;
     private Quaternion openRotation;
-
+    
     void Start()
     {
         // Get the Grabbable component on this handle
         grabbable = GetComponent<Grabbable>();
-
+        
         if (grabbable == null)
         {
             Debug.LogError("No Grabbable component found on " + gameObject.name);
             return;
         }
-
+        
         if (doorToOpen == null)
         {
             Debug.LogError("No door assigned! Drag the door into the Inspector.");
             return;
         }
-
+        
         // Set up door rotations
         closedRotation = doorToOpen.rotation;
         openRotation = Quaternion.Euler(doorToOpen.eulerAngles + new Vector3(0, openAngle, 0));
-
+        
         // Listen for grab events
         grabbable.WhenPointerEventRaised += OnPointerEvent;
     }
-
+    
     void OnDestroy()
     {
         if (grabbable != null)
@@ -65,7 +64,7 @@ public class DoorHandle : MonoBehaviour
             grabbable.WhenPointerEventRaised -= OnPointerEvent;
         }
     }
-
+    
     private void OnPointerEvent(PointerEvent pointerEvent)
     {
         // When the handle is grabbed, open the door
@@ -77,21 +76,24 @@ public class DoorHandle : MonoBehaviour
             }
         }
     }
-
+    
     private IEnumerator OpenDoor()
     {
         isOpening = true;
         isOpen = true;
+        
         float elapsedTime = 0f;
-
+        
+        // Animate the door opening
         while (elapsedTime < doorTime)
         {
             doorToOpen.rotation = Quaternion.Slerp(closedRotation, openRotation, elapsedTime / doorTime);
             elapsedTime += Time.deltaTime * openSpeed;
             yield return null;
         }
-
+        
         doorToOpen.rotation = openRotation;
+        
         isOpening = false;
     }
 }
