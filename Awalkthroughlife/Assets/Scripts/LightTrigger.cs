@@ -13,6 +13,9 @@ public class LightTrigger : MonoBehaviour
     [Tooltip("Turn off light when player exits? (default: false)")]
     public bool turnOffOnExit = false;
 
+    // Internal flag to ensure it only triggers once
+    private bool hasBeenTriggered = false;
+
     private void Start()
     {
         // Make sure the trigger collider is set to trigger
@@ -40,14 +43,19 @@ public class LightTrigger : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         // Check if the object entering has the player tag
-        if (other.CompareTag(playerTag))
+        if (!hasBeenTriggered && other.CompareTag(playerTag))
         {
+            hasBeenTriggered = true; // mark as triggered
+
             // Turn on the spotlight
             if (spotLight != null)
             {
                 spotLight.enabled = true;
                 Debug.Log("Spotlight turned ON");
             }
+
+            // Destroy this object after first touch
+            Destroy(gameObject);
         }
     }
 
