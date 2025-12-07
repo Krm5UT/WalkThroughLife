@@ -22,6 +22,6 @@ public class SceneLoadChecker : MonoBehaviour
 
     public void LoadVRScene()
     {
-        SceneManager.LoadScene("VRWorld");
+        SceneManager.LoadScene("AWalkThroughLife");
     }
 }
