@@ -1,3 +1,4 @@
+/*
 using UnityEngine;
 using UnityEditor;
 
@@ -71,3 +72,4 @@ public class InvertedSphere : EditorWindow
         DestroyImmediate(go);
     }
 }
+*/
